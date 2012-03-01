@@ -6,7 +6,7 @@ List of configuration variables and enumerations used throughout the app.
 import os
 
 
-_kv = {
+_d = {
     "cookie_secret": "foo",
     "debug": True,
     "static_path": os.path.join(os.path.dirname(__file__), "static"),
@@ -25,13 +25,13 @@ class AppConfig:
     """
 
     def __init__(self, config_dict):
-        self.vals = config_dict
+        self.values = config_dict
 
     def __getattr__(self, name):
         """
         Get the value from the ENV, if it's not present, get
         it from the dictionary. Returns None if not found.
         """
-        return os.environ.get(name.upper(), self.vals.get(name.lower()))
+        return os.environ.get(name.upper(), self.values.get(name.lower()))
 
-default = AppConfig(_kv)
+default = AppConfig(_d)
