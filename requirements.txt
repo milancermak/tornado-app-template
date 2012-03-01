@@ -5,4 +5,5 @@ python-dateutil==1.5
 pytz==2011n
 ssh==1.7.11
 times==0.4
+tornado==2.2
 wsgiref==0.1.2
