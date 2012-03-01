@@ -2,6 +2,8 @@
 
 import config
 
+from tornado.web import HTTPError, RequestHandler
+
 
 class BaseAppHandler(RequestHandler):
 
@@ -23,10 +25,8 @@ class BaseAppHandler(RequestHandler):
         return arg
 
     def prepare(self):
-        """
-        Use "method" as an URL parameter to override the requested
-        HTTP method. Necessary in the real-world.
-        """
+
+        # use "method" as an URL param to overwrite the HTTP method
         overriden_method = self.get_argument("method", default=False, optional=True)
         if overriden_method:
             self.request.method = overriden_method
