@@ -9,7 +9,7 @@ import config
 import routes
 
 # date of release; run fab timestamp to set it
-__date__ = "2012-01-31 23:21:31"
+__date__ = "2012-03-01 19:02:03+0000"
 __version__ = "1"
 
 if __name__ == '__main__':

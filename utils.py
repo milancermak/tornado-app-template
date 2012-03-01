@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 
-import datetime
 import json
 import re
 import uuid
+
+import times
 
 from tornado.web import HTTPError
 
@@ -24,5 +25,10 @@ def ensure(expression_result, fail_msg=None, status=500):
     if not expression_result:
         raise HTTPError(status, fail_msg if fail_msg else "Operation failed")
 
-def iso_timestamp(datetime_obj):
-    return datetime_obj.strftime("%Y-%m-%d %H:%M:%S%z")
+def iso_utc_now():
+    """ Return the current date and time in UTC timezone in ISO 8601 format """
+    return times.format(times.now(), "UTC")
+
+def to_iso_utc(iso_string):
+    """ Return the UTC representation of a ISO 8601 timestamp """
+    return times.format(times.to_universal(iso_string), "UTC")

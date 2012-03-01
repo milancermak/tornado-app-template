@@ -1,5 +1,8 @@
 Fabric==1.3.4
 distribute==0.6.14
 pycrypto==2.5
+python-dateutil==1.5
+pytz==2011n
 ssh==1.7.11
+times==0.4
 wsgiref==0.1.2
