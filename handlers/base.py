@@ -11,22 +11,19 @@ class BaseAppHandler(RequestHandler):
     def conf(self):
         return config.default
 
-    def get_argument(self, name, default=None, optional=False):
+    def get_argument(self, name, default=None, required=False):
         """
-        Overriding Tornado's get_argument() to have None as default
-        but also adding the ability to specify an argument as optional,
-        so it will not raise an HTTPError needlessly.
+        Overriding Tornado's get_argument() to consider an argument optional
+        by default and return None if it's not present.
         """
         arg = super(BaseAppHandler, self).get_argument(name, default=default)
-        if arg is self._ARG_DEFAULT:
-            if not optional:
-                raise HTTPError(400, "Missing argument %s" % name) # Bad request
-            return default
+        if arg is default and required:
+            raise HTTPError(400, "Missing argument %s" % name) # Bad request
         return arg
 
     def prepare(self):
 
         # use "method" as an URL param to overwrite the HTTP method
-        overriden_method = self.get_argument("method", default=False, optional=True)
+        overriden_method = self.get_argument("method", default=False)
         if overriden_method:
             self.request.method = overriden_method
