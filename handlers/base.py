@@ -26,4 +26,4 @@ class BaseAppHandler(RequestHandler):
         # use "method" as an URL param to overwrite the HTTP method
         overriden_method = self.get_argument("method", default=False)
         if overriden_method:
-            self.request.method = overriden_method
+            self.request.method = overriden_method.upper()
