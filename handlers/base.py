@@ -5,7 +5,7 @@ import config
 from tornado.web import HTTPError, RequestHandler
 
 
-class BaseAppHandler(RequestHandler):
+class BaseHandler(RequestHandler):
 
     @property
     def conf(self):
@@ -16,7 +16,7 @@ class BaseAppHandler(RequestHandler):
         Overriding Tornado's get_argument() to consider an argument optional
         by default and return None if it's not present.
         """
-        arg = super(BaseAppHandler, self).get_argument(name, default=default)
+        arg = super(BaseHandler, self).get_argument(name, default=default)
         if arg is default and required:
             raise HTTPError(400, "Missing argument %s" % name) # Bad request
         return arg
