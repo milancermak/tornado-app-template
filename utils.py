@@ -25,10 +25,7 @@ def ensure(expression_result, fail_msg=None, status=500):
     if not expression_result:
         raise HTTPError(status, fail_msg if fail_msg else "Operation failed")
 
-def iso_utc_now():
-    """ Return the current date and time in UTC timezone in ISO 8601 format """
-    return times.format(times.now(), "UTC")
-
-def to_iso_utc(iso_string):
-    """ Return the UTC representation of a ISO 8601 timestamp """
-    return times.format(times.to_universal(iso_string), "UTC")
+def rfc_utc_now():
+    """ Return the RFC 3339 format of current UTC time. """
+    s = times.format(times.now(), "UTC", "%Y-%m-%dT%H:%M:%S%z")
+    return s[:-2]+":"+s[-2:]
