@@ -8,7 +8,7 @@ import os
 
 _d = {
     "cookie_secret": "foo",
-    "debug": True,
+    "server_realm": "dev",
     "static_path": os.path.join(os.path.dirname(__file__), "static"),
 }
 
@@ -35,3 +35,6 @@ class AppConfig:
         return os.environ.get(name.upper(), self.values.get(name.lower()))
 
 default = AppConfig(_d)
+
+def is_debug():
+    return defautl.server_realm != "live"

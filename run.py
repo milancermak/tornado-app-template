@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import argparse
+import locale
 
 import tornado.ioloop
 import tornado.web
@@ -20,8 +21,9 @@ if __name__ == '__main__':
     if port is None:
         port = 8000
 
+    locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
     application = tornado.web.Application(routes.all,
                                           cookie_secret=config.default.cookie_secret,
-                                          debug=config.default.debug)
+                                          debug=config.is_debug())
     application.listen(port, xheaders=True)
     tornado.ioloop.IOLoop.instance().start()
