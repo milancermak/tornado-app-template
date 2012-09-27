@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import json
 import re
-import uuid
 
 import times
 
