@@ -7,6 +7,7 @@ import tornado.ioloop
 import tornado.web
 
 import config
+from config import AppConfig
 import routes
 
 # date of release; run fab timestamp to set it
@@ -23,7 +24,7 @@ if __name__ == '__main__':
 
     locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
     application = tornado.web.Application(routes.all,
-                                          cookie_secret=config.default.cookie_secret,
+                                          cookie_secret=AppConfig.default().cookie_secret,
                                           debug=config.is_debug())
     application.listen(port, xheaders=True)
     tornado.ioloop.IOLoop.instance().start()

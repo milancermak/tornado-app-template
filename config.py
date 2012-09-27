@@ -13,7 +13,7 @@ _d = {
 }
 
 
-class AppConfig:
+class AppConfig(object):
     """
     Class holding all configurations necessary for the app to run.
 
@@ -34,7 +34,15 @@ class AppConfig:
         """
         return os.environ.get(name.upper(), self.values.get(name.lower()))
 
-default = AppConfig(_d)
+    @staticmethod
+    def default(config_dict=None):
+        if not hasattr(AppConfig, "_default"):
+            if isinstance(config_dict, dict):
+                AppConfig._default = AppConfig(config_dict)
+            else:
+                global _d
+                AppConfig._default = AppConfig(_d)
+        return AppConfig._default
 
 def is_debug():
-    return defautl.server_realm != "live"
+    return AppConfig.default().server_realm != "live"
