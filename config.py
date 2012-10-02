@@ -6,14 +6,8 @@ List of configuration variables and enumerations used throughout the app.
 import os
 
 
-_d = {
-    "cookie_secret": "foo",
-    "server_realm": "dev",
-    "static_path": os.path.join(os.path.dirname(__file__), "static"),
-}
-
-
 class AppConfig(object):
+
     """
     Class holding all configurations necessary for the app to run.
 
@@ -24,24 +18,23 @@ class AppConfig(object):
     is not even there, it returns None.
     """
 
-    def __init__(self, config_dict):
-        self.values = config_dict
+    CFG = {
+        "cookie_secret": "foo",
+        "server_realm": "dev",
+        "static_path": os.path.join(os.path.dirname(__file__), "static"),
+    }
 
     def __getattr__(self, name):
         """
         Get the value from the ENV, if it's not present, get
         it from the dictionary. Returns None if not found.
         """
-        return os.environ.get(name.upper(), self.values.get(name.lower()))
+        return os.environ.get(name.upper(), self.CFG.get(name.lower()))
 
     @staticmethod
-    def default(config_dict=None):
+    def default():
         if not hasattr(AppConfig, "_default"):
-            if isinstance(config_dict, dict):
-                AppConfig._default = AppConfig(config_dict)
-            else:
-                global _d
-                AppConfig._default = AppConfig(_d)
+            AppConfig._default = AppConfig()
         return AppConfig._default
 
 def is_debug():
